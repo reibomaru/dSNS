@@ -18,6 +18,57 @@ contract DSNS {
 
     constructor() {}
 
+    function quickSortByCountOfLikes(
+        Message[] memory _messages,
+        int256 left,
+        int256 right
+    ) internal pure {
+        int256 i = left;
+        int256 j = right;
+        if (i == j) return;
+        uint256 pivot = _messages[uint256(left + (right - left) / 2)]
+            .conutOfLikes;
+        while (i <= j) {
+            while (_messages[uint256(i)].conutOfLikes > pivot) i++;
+            while (pivot > _messages[uint256(j)].conutOfLikes) j--;
+            if (i <= j) {
+                (_messages[uint256(i)], _messages[uint256(j)]) = (
+                    _messages[uint256(j)],
+                    _messages[uint256(i)]
+                );
+                i++;
+                j--;
+            }
+        }
+        if (left < j) quickSortByCountOfLikes(_messages, left, j);
+        if (i < right) quickSortByCountOfLikes(_messages, i, right);
+    }
+
+    function quickSortByCreatedAt(
+        Message[] memory _messages,
+        int256 left,
+        int256 right
+    ) internal pure {
+        int256 i = left;
+        int256 j = right;
+        if (i == j) return;
+        uint256 pivot = _messages[uint256(left + (right - left) / 2)].createdAt;
+        while (i <= j) {
+            while (_messages[uint256(i)].createdAt > pivot) i++;
+            while (pivot > _messages[uint256(j)].createdAt) j--;
+            if (i <= j) {
+                (_messages[uint256(i)], _messages[uint256(j)]) = (
+                    _messages[uint256(j)],
+                    _messages[uint256(i)]
+                );
+                i++;
+                j--;
+            }
+        }
+        if (left < j) quickSortByCreatedAt(_messages, left, j);
+        if (i < right) quickSortByCreatedAt(_messages, i, right);
+    }
+
     function judgeHasLiked(address liker, uint256 messageId)
         internal
         view
@@ -32,8 +83,26 @@ contract DSNS {
         return (false, 0);
     }
 
-    function listMessages() public view returns (Message[] memory) {
-        return messages;
+    function listMessages(bytes32 sortKey)
+        public
+        view
+        returns (Message[] memory)
+    {
+        Message[] memory _messages = messages;
+        if (sortKey == "createdAt") {
+            quickSortByCreatedAt(
+                _messages,
+                int256(0),
+                int256(messages.length - 1)
+            );
+        } else if (sortKey == "countOfLikes") {
+            quickSortByCountOfLikes(
+                _messages,
+                int256(0),
+                int256(messages.length - 1)
+            );
+        }
+        return _messages;
     }
 
     function likeMessage(uint256 messageId) public returns (bool, uint256) {

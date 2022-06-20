@@ -5,3 +5,5 @@ export type Message = {
   owner: string;
   conutOfLikes: number;
 };
+
+export type SortMode = "createdAt" | "countOfLikes" | "";

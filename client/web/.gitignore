@@ -24,3 +24,6 @@ yarn-error.log*
 
 # credential
 .env
+
+# artifacts
+contracts/

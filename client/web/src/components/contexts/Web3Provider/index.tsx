@@ -14,7 +14,8 @@ import {
   WEBSOCKET_HOST,
   MUMBAI_CONTRACT_ADDRESS,
   MUMBAI_WEBSOCKET_HOST,
-} from "../../../config";
+  LOCAL_CONTRACT_ADDRESS,
+} from "../../../helpers/config";
 
 type web3Context = {
   web3: Web3;
@@ -56,7 +57,7 @@ const Web3Provider = (props: web3ProviderProps) => {
     } else if (chainId === 80001) {
       return MUMBAI_CONTRACT_ADDRESS;
     } else if (chainId === 31337) {
-      return;
+      return LOCAL_CONTRACT_ADDRESS;
     }
   }, []);
 

@@ -3,9 +3,8 @@ import { Message } from "../../../helpers/types";
 import { useWeb3 } from "../../contexts/Web3Provider";
 import { useNavigate } from "react-router-dom";
 import { parseContent } from "../../../helpers/parseContent";
-import likedIcon from "./thumb_up_filled.svg";
-import likeIcon from "./thumb_up_outline.svg";
 import { truncate } from "./helper";
+import LikeIcon from "../../atoms/LikeIcon";
 
 type props = {
   message: Message;
@@ -61,11 +60,7 @@ const MessageCard = (props: props) => {
         created at {date}
       </div>
       <div style={{ cursor: "pointer", alignItems: "center", display: "flex" }}>
-        {props.hasLiked ? (
-          <img src={likedIcon} alt="liked" onClick={likeMessage} />
-        ) : (
-          <img src={likeIcon} alt="like" onClick={likeMessage} />
-        )}
+        <LikeIcon hasLiked={props.hasLiked} onClick={likeMessage} />
         <span style={{ marginLeft: 5 }}>{props.message.conutOfLikes}</span>
       </div>
     </div>

@@ -3,23 +3,33 @@ import { useWeb3 } from "../../contexts/Web3Provider";
 import MessageCard from "../MessageCard";
 import { Message, SortMode } from "../../../helpers/types";
 
-const MessageCardList = () => {
+type props = {
+  owner?: string;
+};
+
+const MessageCardList = (props: props) => {
   const { contract, account, web3 } = useWeb3();
   const [messages, setMessages] = useState<Message[]>([]);
   const [likedIds, setLikedIds] = useState<number[]>([]);
   const [sortMode, setSortMode] = useState<SortMode>("");
 
   const updateFeed = useCallback(async () => {
-    const _messages = await contract.methods
+    const _messages: Message[] = await contract.methods
       .listMessages(web3.utils.fromAscii(sortMode))
       .call();
-    setMessages(_messages);
+    if (props.owner) {
+      setMessages(
+        _messages.filter((_message) => _message.owner === props.owner)
+      );
+    } else {
+      setMessages(_messages);
+    }
 
     const likedIds = await contract.methods.likedMessageIdOf().call({
       from: account,
     });
     setLikedIds(likedIds);
-  }, [account, contract.methods, sortMode, web3.utils]);
+  }, [account, contract.methods, sortMode, web3.utils, props.owner]);
 
   useEffect(() => {
     (async () => {

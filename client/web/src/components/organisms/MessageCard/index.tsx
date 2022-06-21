@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { Message } from "../../../helpers/types";
 import { useWeb3 } from "../../contexts/Web3Provider";
+import { useNavigate } from "react-router-dom";
 
 type props = {
   message: Message;
@@ -12,6 +13,7 @@ const MessageCard = (props: props) => {
   const date = useMemo(() => {
     return new Date(props.message.createdAt * 1000).toUTCString();
   }, [props.message.createdAt]);
+  const navigate = useNavigate();
 
   const likeMessage = useCallback(async () => {
     const res = await contract.methods.likeMessage(props.message.id).send(
@@ -27,11 +29,20 @@ const MessageCard = (props: props) => {
     console.log(res);
   }, [account, contract.methods, props.message.id]);
 
+  const navigateToOwnerPage = useCallback(() => {
+    navigate(`/${props.message.owner}`);
+  }, [navigate, props.message.owner]);
+
   return (
     <>
       <p>id: {props.message.id}</p>
       <p>created at {date}</p>
-      <p>created by {props.message.owner}</p>
+      <p>
+        created by{" "}
+        <strong onClick={navigateToOwnerPage} style={{ cursor: "pointer" }}>
+          {props.message.owner}
+        </strong>
+      </p>
       <p>{props.message.content}</p>
       <div>
         <button onClick={likeMessage}>

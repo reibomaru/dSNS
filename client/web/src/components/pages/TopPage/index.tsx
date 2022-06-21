@@ -4,9 +4,8 @@ import MessageCardList from "../../organisms/MessageCardList";
 const TopPage = () => {
   return (
     <div style={{ padding: 20, display: "flex", flexDirection: "column" }}>
-      <h2>Top</h2>
-      <hr />
       <MessageForm />
+      <hr style={{ width: "50%" }} />
       <MessageCardList />
     </div>
   );

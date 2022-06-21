@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { parseContent } from "../../../helpers/parseContent";
+import Button from "../../atoms/Button";
 import { useWeb3 } from "../../contexts/Web3Provider";
 
 const MessageForm = () => {
@@ -26,26 +27,79 @@ const MessageForm = () => {
   }, [account, contentInput, contract.methods]);
 
   return (
-    <>
-      <p>post message</p>
-      <textarea
-        name="content"
-        id="content"
-        cols={80}
-        rows={5}
-        onChange={changeContentInput}
-        value={contentInput}
-      ></textarea>
-      <span>{preview}</span>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <div
+        style={{
+          width: "50%",
+          padding: 5,
+        }}
+      >
+        <h2>Post</h2>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            height: 120,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              flex: 1,
+              margin: 2,
+            }}
+          >
+            <strong>input</strong>
+            <textarea
+              name="content"
+              id="content"
+              onChange={changeContentInput}
+              value={contentInput}
+              style={{ padding: 5, flex: 1, fontSize: 15 }}
+              placeholder="Write what you want to tell everyone!"
+            ></textarea>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              flex: 1,
+              margin: 2,
+            }}
+          >
+            <strong>preview</strong>
+            <div
+              style={{
+                border: 1,
+                borderStyle: "solid",
+                padding: 5,
+                flex: 1,
+                fontSize: 15,
+                overflowY: "scroll",
+              }}
+            >
+              {preview}
+              <hr />
+              <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+                <>
+                  {contentInput.length}/200 characters{" "}
+                  {contentInput.length > 200 && "over the limit!!"}
+                </>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <p>
-        {contentInput.length}/200 characters{" "}
-        {contentInput.length > 200 && "over the limit!!"}
-      </p>
-      <div>
-        <button onClick={postMessage}>post</button>
+        <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+          <Button style={{ marginRight: "50%" }} onClick={postMessage}>
+            post
+          </Button>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

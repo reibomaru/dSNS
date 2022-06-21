@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useWeb3 } from "../../contexts/Web3Provider";
 import MessageCard from "../MessageCard";
 import { Message, SortMode } from "../../../helpers/types";
+import Button from "../../atoms/Button";
 
 type props = {
   owner?: string;
@@ -65,9 +66,7 @@ const MessageCardList = (props: props) => {
           }}
         >
           <h2>Feed</h2>
-          <button style={{ marginLeft: 10 }} onClick={updateFeed}>
-            update feed
-          </button>
+          <Button onClick={updateFeed}>update feed</Button>
         </div>
         <div style={{ display: "flex", flexDirection: "row-reverse" }}>
           <div>

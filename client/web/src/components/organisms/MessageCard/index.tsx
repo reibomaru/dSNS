@@ -3,6 +3,9 @@ import { Message } from "../../../helpers/types";
 import { useWeb3 } from "../../contexts/Web3Provider";
 import { useNavigate } from "react-router-dom";
 import { parseContent } from "../../../helpers/parseContent";
+import likedIcon from "./thumb_up_filled.svg";
+import likeIcon from "./thumb_up_outline.svg";
+import { truncate } from "./helper";
 
 type props = {
   message: Message;
@@ -38,23 +41,34 @@ const MessageCard = (props: props) => {
   }, [navigate, props.message.owner]);
 
   return (
-    <>
-      <p>id: {props.message.id}</p>
-      <p>created at {date}</p>
+    <div
+      style={{
+        border: 1,
+        borderStyle: "solid",
+        padding: 5,
+        margin: "10px 0px",
+      }}
+    >
       <p>
-        created by{" "}
         <strong onClick={navigateToOwnerPage} style={{ cursor: "pointer" }}>
-          {props.message.owner}
+          {truncate(props.message.owner, 8, 4)}
         </strong>
       </p>
       <p>{content}</p>
-      <div>
-        <button onClick={likeMessage}>
-          {props.hasLiked ? "unlike" : "like"}
-        </button>
-        {props.message.conutOfLikes}
+      <div
+        style={{ display: "flex", flexDirection: "row-reverse", opacity: 0.5 }}
+      >
+        created at {date}
       </div>
-    </>
+      <div style={{ cursor: "pointer", alignItems: "center", display: "flex" }}>
+        {props.hasLiked ? (
+          <img src={likedIcon} alt="liked" onClick={likeMessage} />
+        ) : (
+          <img src={likeIcon} alt="like" onClick={likeMessage} />
+        )}
+        <span style={{ marginLeft: 5 }}>{props.message.conutOfLikes}</span>
+      </div>
+    </div>
   );
 };
 

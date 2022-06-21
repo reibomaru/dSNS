@@ -53,19 +53,36 @@ const MessageCardList = (props: props) => {
   }, [likedIds, messages]);
 
   return (
-    <>
-      <div>
-        {"sort by "}
-        <select onChange={changeSortMode} value={sortMode}>
-          <option value="createdAt">createdAt</option>
-          <option value="countOfLikes">conutOfLikes</option>
-          <option value="">id</option>
-        </select>
-        <button onClick={updateFeed}>update feed</button>
-      </div>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <div style={{ width: "50%" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <h2>Feed</h2>
+          <button style={{ marginLeft: 10 }} onClick={updateFeed}>
+            update feed
+          </button>
+        </div>
+        <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+          <div>
+            {"sort by "}
+            <select onChange={changeSortMode} value={sortMode}>
+              <option value="createdAt">created at</option>
+              <option value="countOfLikes">likes</option>
+              <option value="">message id</option>
+            </select>
+          </div>
+        </div>
 
-      {cardList}
-    </>
+        {cardList}
+      </div>
+    </div>
   );
 };
 

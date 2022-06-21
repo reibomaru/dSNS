@@ -1,8 +1,12 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { parseContent } from "../../../helpers/parseContent";
 import { useWeb3 } from "../../contexts/Web3Provider";
 
 const MessageForm = () => {
   const [contentInput, setContentInput] = useState<string>("");
+  const preview = useMemo(() => {
+    return parseContent(contentInput);
+  }, [contentInput]);
   const { contract, account } = useWeb3();
 
   const changeContentInput = useCallback<
@@ -27,11 +31,13 @@ const MessageForm = () => {
       <textarea
         name="content"
         id="content"
-        cols={100}
+        cols={80}
         rows={5}
         onChange={changeContentInput}
         value={contentInput}
       ></textarea>
+      <span>{preview}</span>
+
       <p>
         {contentInput.length}/200 characters{" "}
         {contentInput.length > 200 && "over the limit!!"}

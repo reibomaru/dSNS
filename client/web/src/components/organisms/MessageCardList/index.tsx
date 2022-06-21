@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useWeb3 } from "../../contexts/Web3Provider";
 import MessageCard from "../MessageCard";
 import { Message, SortMode } from "../../../helpers/types";
@@ -33,6 +33,15 @@ const MessageCardList = () => {
     setSortMode(event.target.value as SortMode);
   }, []);
 
+  const cardList = useMemo(() => {
+    return messages.map((message) => {
+      const hasLiked = likedIds.includes(message.id);
+      return (
+        <MessageCard message={message} key={message.id} hasLiked={hasLiked} />
+      );
+    });
+  }, [likedIds, messages]);
+
   return (
     <>
       <div>
@@ -45,12 +54,7 @@ const MessageCardList = () => {
         <button onClick={updateFeed}>update feed</button>
       </div>
 
-      {messages.map((message) => {
-        const hasLiked = likedIds.includes(message.id);
-        return (
-          <MessageCard message={message} key={message.id} hasLiked={hasLiked} />
-        );
-      })}
+      {cardList}
     </>
   );
 };

@@ -12,6 +12,10 @@ const MessageForm = () => {
   }, []);
 
   const postMessage = useCallback(async () => {
+    if (contentInput.length > 200) {
+      alert("Sorry... the maximum content you can post is 200 characters.");
+      return;
+    }
     await contract.methods.createMessage(contentInput).send({
       from: account,
     });
@@ -28,6 +32,10 @@ const MessageForm = () => {
         onChange={changeContentInput}
         value={contentInput}
       ></textarea>
+      <p>
+        {contentInput.length}/200 characters{" "}
+        {contentInput.length > 200 && "over the limit!!"}
+      </p>
       <div>
         <button onClick={postMessage}>post</button>
       </div>

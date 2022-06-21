@@ -13,3 +13,12 @@ start-local-blockchain:
 
 deploy-local:
 	cd blockchain && npx hardhat --network localhost run scripts/deploy.ts
+
+deploy-mumbai:
+	cd blockchain && npx hardhat --network mumbai run scripts/deploy.ts
+
+build-client-web:
+	cd client/web && npm run build
+
+deploy-client-web:
+	cd client/web && npx firebase deploy --only hosting

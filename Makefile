@@ -10,3 +10,6 @@ start-client-web:
 
 start-local-blockchain:
 	cd blockchain && npx hardhat node
+
+deploy-local:
+	cd blockchain && npx hardhat --network localhost scripts/deploy.ts

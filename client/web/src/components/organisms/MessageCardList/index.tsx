@@ -9,23 +9,23 @@ const MessageCardList = () => {
   const [likedIds, setLikedIds] = useState<number[]>([]);
   const [sortMode, setSortMode] = useState<SortMode>("");
 
-  useEffect(() => {
-    (async () => {
-      const _messages = await contract.methods
-        .listMessages(web3.utils.fromAscii(sortMode))
-        .call();
-      setMessages(_messages);
-    })();
-  }, [contract.methods, contract.methods.listMessages, sortMode, web3.utils]);
+  const updateFeed = useCallback(async () => {
+    const _messages = await contract.methods
+      .listMessages(web3.utils.fromAscii(sortMode))
+      .call();
+    setMessages(_messages);
+
+    const likedIds = await contract.methods.likedMessageIdOf().call({
+      from: account,
+    });
+    setLikedIds(likedIds);
+  }, [account, contract.methods, sortMode, web3.utils]);
 
   useEffect(() => {
     (async () => {
-      const likedIds = await contract.methods.likedMessageIdOf().call({
-        from: account,
-      });
-      setLikedIds(likedIds);
+      await updateFeed();
     })();
-  }, [account, contract.methods]);
+  }, [updateFeed]);
 
   const changeSortMode = useCallback<
     React.ChangeEventHandler<HTMLSelectElement>
@@ -42,6 +42,7 @@ const MessageCardList = () => {
           <option value="countOfLikes">conutOfLikes</option>
           <option value="">id</option>
         </select>
+        <button onClick={updateFeed}>update feed</button>
       </div>
 
       {messages.map((message) => {

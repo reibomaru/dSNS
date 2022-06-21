@@ -10,12 +10,20 @@ import { Theme } from "../../../helpers/types";
 type themeContext = {
   theme: Theme;
   changeTheme: (theme: Theme) => void;
+  themeStyles: {
+    color: string;
+    background: string;
+  };
 };
 
 const ThemeContext = createContext<themeContext>({
   theme: "light",
   changeTheme: () => {
     console.error("Sorry... you cannot change the theme yet");
+  },
+  themeStyles: {
+    color: "#000000",
+    background: "#ffffff",
   },
 });
 
@@ -42,7 +50,7 @@ const ThemeProvider = (props: props) => {
     }
   }, [theme]);
   return (
-    <ThemeContext.Provider value={{ theme, changeTheme }}>
+    <ThemeContext.Provider value={{ theme, changeTheme, themeStyles }}>
       <div
         style={{
           position: "absolute",

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useCallback } from "react";
 import { useTheme } from "../../contexts/ThemeProvider";
 import { Theme } from "../../../helpers/types";
+import Select from "../../atoms/Select";
+import Option from "../../atoms/Option";
 
 const Header = () => {
   const { balance, account, currencyUnit } = useWeb3();
@@ -56,10 +58,10 @@ const Header = () => {
       <div style={{ flex: 1, display: "flex", flexDirection: "row-reverse" }}>
         <p style={{ margin: 20 }}>
           Theme:
-          <select onChange={handleChangeTheme} value={theme}>
-            <option value="dark">dark</option>
-            <option value="light">light</option>
-          </select>
+          <Select onChange={handleChangeTheme} value={theme}>
+            <Option value="dark">dark</Option>
+            <Option value="light">light</Option>
+          </Select>
         </p>
       </div>
     </div>

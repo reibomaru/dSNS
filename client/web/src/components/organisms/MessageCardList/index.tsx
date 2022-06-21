@@ -3,6 +3,8 @@ import { useWeb3 } from "../../contexts/Web3Provider";
 import MessageCard from "../MessageCard";
 import { Message, SortMode } from "../../../helpers/types";
 import Button from "../../atoms/Button";
+import Select from "../../atoms/Select";
+import Option from "../../atoms/Option";
 
 type props = {
   owner?: string;
@@ -71,11 +73,11 @@ const MessageCardList = (props: props) => {
         <div style={{ display: "flex", flexDirection: "row-reverse" }}>
           <div>
             {"sort by "}
-            <select onChange={changeSortMode} value={sortMode}>
-              <option value="createdAt">created at</option>
-              <option value="countOfLikes">likes</option>
-              <option value="">message id</option>
-            </select>
+            <Select onChange={changeSortMode} value={sortMode}>
+              <Option value="createdAt">created at</Option>
+              <Option value="countOfLikes">likes</Option>
+              <Option value="">message id</Option>
+            </Select>
           </div>
         </div>
 

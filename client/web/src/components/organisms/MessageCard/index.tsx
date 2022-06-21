@@ -22,17 +22,16 @@ const MessageCard = (props: props) => {
   }, [props.message.content]);
 
   const likeMessage = useCallback(async () => {
-    const res = await contract.methods.likeMessage(props.message.id).send(
+    await contract.methods.likeMessage(props.message.id).send(
       {
         from: account,
       },
-      (error: any, _hash: any) => {
+      (error: any) => {
         if (error) {
-          console.log(error);
+          console.error(error);
         }
       }
     );
-    console.log(res);
   }, [account, contract.methods, props.message.id]);
 
   const navigateToOwnerPage = useCallback(() => {

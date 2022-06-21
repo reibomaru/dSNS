@@ -18,4 +18,4 @@ const Option = (props: props) => {
   );
 };
 
-export default Option;
+export default React.memo(Option);

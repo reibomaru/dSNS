@@ -12,4 +12,4 @@ start-local-blockchain:
 	cd blockchain && npx hardhat node
 
 deploy-local:
-	cd blockchain && npx hardhat --network localhost scripts/deploy.ts
+	cd blockchain && npx hardhat --network localhost run scripts/deploy.ts

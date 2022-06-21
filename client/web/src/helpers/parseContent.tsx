@@ -9,7 +9,12 @@ const string2AnchorElement = (str: string) => {
     const content = parts[1];
     const url = parts[2];
     return (
-      <a href={url} target="_blank" rel="noopener noreferrer">
+      <a
+        href={url}
+        style={{ color: "inherit" }}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         {content}
       </a>
     );

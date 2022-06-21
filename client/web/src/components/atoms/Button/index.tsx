@@ -11,12 +11,10 @@ const Button = (props: props) => {
     <div
       style={{
         marginLeft: 10,
-        background: "#fff",
         borderWidth: 2,
         padding: 2,
         borderRadius: 3,
         borderStyle: "solid",
-        borderColor: "#000000",
         cursor: "pointer",
         fontWeight: 500,
         ...props.style,

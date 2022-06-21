@@ -58,7 +58,13 @@ const MessageForm = () => {
               id="content"
               onChange={changeContentInput}
               value={contentInput}
-              style={{ padding: 5, flex: 1, fontSize: 15 }}
+              style={{
+                padding: 5,
+                flex: 1,
+                fontSize: 15,
+                background: "inherit",
+                color: "inherit",
+              }}
               placeholder="Write what you want to tell everyone!"
             ></textarea>
           </div>

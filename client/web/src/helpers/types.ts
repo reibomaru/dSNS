@@ -7,3 +7,5 @@ export type Message = {
 };
 
 export type SortMode = "createdAt" | "countOfLikes" | "";
+
+export type Theme = "dark" | "light";

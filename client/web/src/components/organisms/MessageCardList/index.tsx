@@ -46,7 +46,7 @@ const MessageCardList = () => {
     <>
       <div>
         {"sort by "}
-        <select onChange={changeSortMode}>
+        <select onChange={changeSortMode} value={sortMode}>
           <option value="createdAt">createdAt</option>
           <option value="countOfLikes">conutOfLikes</option>
           <option value="">id</option>

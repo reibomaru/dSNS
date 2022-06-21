@@ -19,7 +19,7 @@ async function main() {
 
   await dsns.deployed();
 
-  console.log("Greeter deployed to:", dsns.address);
+  console.log("DSNS deployed to:", dsns.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

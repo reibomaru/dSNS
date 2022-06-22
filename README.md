@@ -30,7 +30,7 @@ REACT_APP_LOCAL_CONTRACT_ADDRESS=<deployed-contract-address-on-localhost>
 ```
 ### 6. start the client-web
 ```
-start-client-web
+make start-client-web
 ```
 You can use dSNS on localhost:3000!!
 

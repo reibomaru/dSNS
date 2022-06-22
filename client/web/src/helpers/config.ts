@@ -1,3 +1,4 @@
+// load environmental variables
 export const MUMBAI_CONTRACT_ADDRESS =
   process.env.REACT_APP_MUMBAI_CONTRACT_ADDRESS || "";
 export const MUMBAI_WEBSOCKET_HOST =

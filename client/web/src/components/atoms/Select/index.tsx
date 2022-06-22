@@ -6,6 +6,11 @@ type props = {
   value: string | number | readonly string[];
 };
 
+/**
+ * Select with a specific style applied
+ * @param props onChange, value
+ * @returns select JSX Element
+ */
 const Select = (props: props) => {
   return (
     <select

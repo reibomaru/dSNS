@@ -31,11 +31,16 @@ type props = {
   children: React.ReactNode;
 };
 
+/**
+ * Provider to set themes such as dark mode
+ * @returns Provider component
+ */
 const ThemeProvider = (props: props) => {
   const [theme, setTheme] = useState<Theme>("light");
   const changeTheme = useCallback((theme: Theme) => {
     setTheme(theme);
   }, []);
+  /// Change color and background settings according to theme
   const themeStyles = useMemo(() => {
     if (theme === "light") {
       return {

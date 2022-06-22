@@ -3,8 +3,13 @@ import { parseContent } from "../../../helpers/parseContent";
 import Button from "../../atoms/Button";
 import { useWeb3 } from "../../contexts/Web3Provider";
 
+/**
+ * component of form to post new message
+ * @returns component of form to post new message
+ */
 const MessageForm = () => {
   const [contentInput, setContentInput] = useState<string>("");
+  // Parses the input string and creates a jsx element for previewing the display
   const preview = useMemo(() => {
     return parseContent(contentInput);
   }, [contentInput]);
@@ -16,7 +21,9 @@ const MessageForm = () => {
     setContentInput(event.target.value);
   }, []);
 
+  // post message to contract
   const postMessage = useCallback(async () => {
+    // check if content length is over the limit
     if (contentInput.length > 200) {
       alert("Sorry... the maximum content you can post is 200 characters.");
       return;

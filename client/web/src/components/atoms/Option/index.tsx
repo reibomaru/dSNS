@@ -6,6 +6,11 @@ type props = {
   value: string | number | readonly string[];
 };
 
+/**
+ * Option with a specific style applied
+ * @param props value
+ * @returns option JSX Element
+ */
 const Option = (props: props) => {
   const { themeStyles } = useTheme();
   return (

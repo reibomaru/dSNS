@@ -1,19 +1,9 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import detectEthereumProvider from "@metamask/detect-provider";
 import Web3 from "web3";
 import { Contract } from "web3-eth-contract";
 import DSNS from "../../../contracts/DSNS.sol/DSNS.json";
-import {
-  MUMBAI_CONTRACT_ADDRESS,
-  MUMBAI_WEBSOCKET_HOST,
-  LOCAL_CONTRACT_ADDRESS,
-} from "../../../helpers/config";
+import { selectContractAddress, selectWebSocketHost } from "./helper";
 
 type web3Context = {
   web3: Web3;
@@ -35,36 +25,19 @@ const Web3Provider = (props: web3ProviderProps) => {
   const [web3Obj, setWeb3Obj] = useState<web3Context | null>(null);
 
   useEffect(() => {
+    // Reload when account is changed
     window.ethereum.on("accountsChanged", () => {
       // Handle the new accounts, or lack thereof.
-      // "accounts" will always be an array, but it can be empty.
       window.location.reload();
     });
-
+    // Reload when chain is changed
     window.ethereum.on("chainChanged", () => {
       // Handle the new chain.
-      // Correctly handling chain changes can be complicated.
-      // We recommend reloading the page unless you have good reason not to.
       window.location.reload();
     });
   }, []);
 
-  const selectContractAddress = useCallback((chainId: number) => {
-    if (chainId === 80001) {
-      return MUMBAI_CONTRACT_ADDRESS;
-    } else if (chainId === 31337) {
-      return LOCAL_CONTRACT_ADDRESS;
-    }
-  }, []);
-
-  const selectWebSocketHost = useCallback((chainId: number) => {
-    if (chainId === 80001) {
-      return MUMBAI_WEBSOCKET_HOST;
-    } else if (chainId === 31337) {
-      return "ws://127.0.0.1:8545";
-    }
-  }, []);
-
+  // Initialize connection with contract and wallet
   useEffect(() => {
     (async () => {
       const provider = await detectEthereumProvider({ mustBeMetaMask: true });
@@ -75,17 +48,20 @@ const Web3Provider = (props: web3ProviderProps) => {
         const contractAddress = selectContractAddress(chainId);
         const webSocketHost = selectWebSocketHost(chainId);
 
-        const accounts = await web3.eth.requestAccounts();
-        const account = accounts[0];
+        if (webSocketHost && contractAddress) {
+          // connect with metamask wallet
+          const accounts = await web3.eth.requestAccounts();
+          const account = accounts[0];
 
-        const balance = await web3.eth.getBalance(accounts[0]);
+          const balance = await web3.eth.getBalance(accounts[0]);
 
-        const contract = new web3.eth.Contract(
-          DSNS.abi as any,
-          contractAddress
-        );
+          // init contract via metamask
+          const contract = new web3.eth.Contract(
+            DSNS.abi as any,
+            contractAddress
+          );
 
-        if (webSocketHost) {
+          // init contract via websocket only for listening event
           const provider = new Web3.providers.WebsocketProvider(webSocketHost);
           const web3EventListner = new Web3(provider);
 
@@ -94,6 +70,7 @@ const Web3Provider = (props: web3ProviderProps) => {
             contractAddress
           );
 
+          //init currency unit
           const currencyUnit = chainId === 80001 ? "MATIC" : "ETH";
 
           setWeb3Obj({
@@ -110,7 +87,7 @@ const Web3Provider = (props: web3ProviderProps) => {
         console.log("Please Install MetaMask🙇‍♂️");
       }
     })();
-  }, [selectContractAddress, selectWebSocketHost]);
+  }, []);
 
   return (
     <>

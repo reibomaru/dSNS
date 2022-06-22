@@ -6,6 +6,10 @@ import { Theme } from "../../../helpers/types";
 import Select from "../../atoms/Select";
 import Option from "../../atoms/Option";
 
+/**
+ * Header component
+ * @returns Header component
+ */
 const Header = () => {
   const { balance, account, currencyUnit } = useWeb3();
   const navigate = useNavigate();
@@ -20,6 +24,7 @@ const Header = () => {
     [navigate]
   );
 
+  // change theme using themeProvider
   const handleChangeTheme = useCallback<
     React.ChangeEventHandler<HTMLSelectElement>
   >(

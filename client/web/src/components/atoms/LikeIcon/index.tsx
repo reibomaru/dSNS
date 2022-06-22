@@ -9,6 +9,11 @@ type props = {
   onClick: React.MouseEventHandler<HTMLImageElement>;
 };
 
+/**
+ * Icon of likes component, the UI will vary depending on conditions.
+ * @param props hasLiked
+ * @returns Icon of likes component
+ */
 const LikeIcon = (props: props) => {
   const { theme } = useTheme();
   if (props.hasLiked) {

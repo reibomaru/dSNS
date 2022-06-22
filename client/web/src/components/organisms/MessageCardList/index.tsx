@@ -10,6 +10,11 @@ type props = {
   owner?: string;
 };
 
+/**
+ * component of list of messages
+ * @param props owner: if the owner is set up, list only he or her messages
+ * @returns component of list of messages
+ */
 const MessageCardList = (props: props) => {
   const { contract, account, web3 } = useWeb3();
   const [messages, setMessages] = useState<Message[]>([]);
@@ -34,6 +39,7 @@ const MessageCardList = (props: props) => {
     setLikedIds(likedIds);
   }, [account, contract.methods, sortMode, web3.utils, props.owner]);
 
+  // Fetch data on first load.
   useEffect(() => {
     (async () => {
       await updateFeed();
@@ -48,6 +54,7 @@ const MessageCardList = (props: props) => {
 
   const cardList = useMemo(() => {
     return messages.map((message) => {
+      // check if the account has liked the message
       const hasLiked = likedIds.includes(message.id);
       return (
         <MessageCard message={message} key={message.id} hasLiked={hasLiked} />

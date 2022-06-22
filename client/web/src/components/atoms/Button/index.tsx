@@ -6,6 +6,11 @@ type props = {
   style?: React.CSSProperties;
 };
 
+/**
+ * Button with a specific style applied
+ * @param props onClick, style
+ * @returns button JSX Element
+ */
 const Button = (props: props) => {
   return (
     <div

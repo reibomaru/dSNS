@@ -17,10 +17,12 @@ const MessageCard = (props: props) => {
     return new Date(props.message.createdAt * 1000).toUTCString();
   }, [props.message.createdAt]);
   const navigate = useNavigate();
+  // Parse content string and create appropriate jsx element
   const content = useMemo(() => {
     return parseContent(props.message.content);
   }, [props.message.content]);
 
+  // call likeMessage from contract
   const likeMessage = useCallback(async () => {
     await contract.methods.likeMessage(props.message.id).send(
       {

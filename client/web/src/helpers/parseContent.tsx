@@ -3,6 +3,11 @@ const urlRegex =
 const anchorSyntaxRegex = /(\[.+\]\(.+\))/g;
 const anchorSyntaxRegexToExtractContent = /\[(.+)\]\((.+)\)/i;
 
+/**
+ * detect anchorSyntaxRegex and replace anchor element
+ * @param str raw string
+ * @returns anchor element
+ */
 const string2AnchorElement = (str: string) => {
   const parts = str.match(anchorSyntaxRegexToExtractContent);
   if (parts && parts.length > 2) {
@@ -22,6 +27,11 @@ const string2AnchorElement = (str: string) => {
   return <></>;
 };
 
+/**
+ * parse string and create jsx element
+ * @param content
+ * @returns
+ */
 export const parseContent = (content: string) => {
   return content
     .replace(urlRegex, "[$&]($&)")

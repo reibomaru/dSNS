@@ -1,3 +1,4 @@
+// message entity
 export type Message = {
   id: number;
   content: string;
@@ -6,6 +7,8 @@ export type Message = {
   conutOfLikes: number;
 };
 
+// selectable mode of type
 export type SortMode = "createdAt" | "countOfLikes" | "";
 
+// selectable theme
 export type Theme = "dark" | "light";

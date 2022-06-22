@@ -1,6 +1,10 @@
 import { useParams } from "react-router-dom";
 import MessageCardList from "../../organisms/MessageCardList";
 
+/**
+ * component of account page
+ * @returns component of account page
+ */
 const AccountPage = () => {
   const { accountId } = useParams();
   return (

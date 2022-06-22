@@ -10,8 +10,6 @@ import Web3 from "web3";
 import { Contract } from "web3-eth-contract";
 import DSNS from "../../../contracts/DSNS.sol/DSNS.json";
 import {
-  CONTRACT_ADDRESS,
-  WEBSOCKET_HOST,
   MUMBAI_CONTRACT_ADDRESS,
   MUMBAI_WEBSOCKET_HOST,
   LOCAL_CONTRACT_ADDRESS,
@@ -52,9 +50,7 @@ const Web3Provider = (props: web3ProviderProps) => {
   }, []);
 
   const selectContractAddress = useCallback((chainId: number) => {
-    if (chainId === 5) {
-      return CONTRACT_ADDRESS;
-    } else if (chainId === 80001) {
+    if (chainId === 80001) {
       return MUMBAI_CONTRACT_ADDRESS;
     } else if (chainId === 31337) {
       return LOCAL_CONTRACT_ADDRESS;
@@ -62,9 +58,7 @@ const Web3Provider = (props: web3ProviderProps) => {
   }, []);
 
   const selectWebSocketHost = useCallback((chainId: number) => {
-    if (chainId === 5) {
-      return WEBSOCKET_HOST;
-    } else if (chainId === 80001) {
+    if (chainId === 80001) {
       return MUMBAI_WEBSOCKET_HOST;
     } else if (chainId === 31337) {
       return "ws://127.0.0.1:8545";
@@ -97,7 +91,7 @@ const Web3Provider = (props: web3ProviderProps) => {
 
           const _contract = new web3EventListner.eth.Contract(
             DSNS.abi as any,
-            CONTRACT_ADDRESS
+            contractAddress
           );
 
           const currencyUnit = chainId === 80001 ? "MATIC" : "ETH";

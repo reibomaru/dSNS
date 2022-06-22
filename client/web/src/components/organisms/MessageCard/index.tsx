@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Message } from "../../../helpers/types";
 import { useWeb3 } from "../../contexts/Web3Provider";
 import { useNavigate } from "react-router-dom";
@@ -66,4 +66,4 @@ const MessageCard = (props: props) => {
   );
 };
 
-export default MessageCard;
+export default React.memo(MessageCard);

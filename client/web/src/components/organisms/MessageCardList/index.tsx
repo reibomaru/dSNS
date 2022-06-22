@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useWeb3 } from "../../contexts/Web3Provider";
 import MessageCard from "../MessageCard";
 import { Message, SortMode } from "../../../helpers/types";
@@ -87,4 +87,4 @@ const MessageCardList = (props: props) => {
   );
 };
 
-export default MessageCardList;
+export default React.memo(MessageCardList);

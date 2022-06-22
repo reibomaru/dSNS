@@ -139,7 +139,7 @@ contract DSNS {
     }
 
     /// @notice Create a message (message must be no more than 200 characters)
-    function createMessage(string memory content) public {
+    function postMessage(string memory content) public {
         require(bytes(content).length <= 200);
         Message memory message = Message(
             messageCount,

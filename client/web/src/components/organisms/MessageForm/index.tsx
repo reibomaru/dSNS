@@ -21,7 +21,7 @@ const MessageForm = () => {
       alert("Sorry... the maximum content you can post is 200 characters.");
       return;
     }
-    await contract.methods.createMessage(contentInput).send({
+    await contract.methods.postMessage(contentInput).send({
       from: account,
     });
   }, [account, contentInput, contract.methods]);

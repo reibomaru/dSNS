@@ -1,3 +1,7 @@
+init:
+	cd blockchain && npm install
+	cd client/web && npm install
+
 migrate-client-web:
 	cp -r blockchain/artifacts/contracts client/web/src
 

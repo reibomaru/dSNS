@@ -33,7 +33,7 @@ const MessageCardList = (props: props) => {
       setMessages(_messages);
     }
 
-    const likedIds = await contract.methods.likedMessageIdOf().call({
+    const likedIds = await contract.methods.likedMessageId().call({
       from: account,
     });
     setLikedIds(likedIds);

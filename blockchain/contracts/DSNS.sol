@@ -18,6 +18,8 @@ contract DSNS {
 
     constructor() {}
 
+    /// @notice Sort (quicksort) messages by number of likes
+    /// @dev The value of messages passed by reference is rewritten in the function.
     function quickSortByCountOfLikes(
         Message[] memory _messages,
         int256 left,
@@ -44,6 +46,8 @@ contract DSNS {
         if (i < right) quickSortByCountOfLikes(_messages, i, right);
     }
 
+    /// @notice Sort (quicksort) messages by number of createdAt
+    /// @dev The value of messages passed by reference is rewritten in the function.
     function quickSortByCreatedAt(
         Message[] memory _messages,
         int256 left,
@@ -69,6 +73,8 @@ contract DSNS {
         if (i < right) quickSortByCreatedAt(_messages, i, right);
     }
 
+    /// @notice Judge if the liker has already liked the message of messageId
+    /// @return result of the judge, index in the likedMessageIds (if judge is true)
     function judgeHasLiked(address liker, uint256 messageId)
         internal
         view
@@ -83,6 +89,7 @@ contract DSNS {
         return (false, 0);
     }
 
+    /// @notice Get a list of messages sorted according to sortKey
     function listMessages(bytes32 sortKey)
         public
         view
@@ -105,27 +112,33 @@ contract DSNS {
         return _messages;
     }
 
-    function likeMessage(uint256 messageId) public returns (bool, uint256) {
+    /// @notice Execute like or cancel to like for a message with messageId
+    function likeMessage(uint256 messageId) public {
         (bool hasLiked, uint256 index) = judgeHasLiked(msg.sender, messageId);
         if (hasLiked) {
+            // Transaction to cancel a like
+            // Pop the id of the message to be unliked from the sender's likedMessageIds
             uint256[] storage likedMessageIds = likedMessageIdsOf[msg.sender];
             uint256 lastId = likedMessageIds[likedMessageIds.length - 1];
             likedMessageIds[index] = lastId;
             likedMessageIds.pop();
+            // Reduce the number of likes for a message by 1.
             Message storage likedMessage = messages[messageId];
             likedMessage.conutOfLikes -= 1;
         } else {
+            // Transaction to like
             likedMessageIdsOf[msg.sender].push(messageId);
             Message storage likedMessage = messages[messageId];
             likedMessage.conutOfLikes += 1;
         }
-        return (hasLiked, index);
     }
 
-    function likedMessageIdOf() public view returns (uint256[] memory) {
+    /// @notice Get a list of id's of messages that the sender has liked
+    function likedMessageId() public view returns (uint256[] memory) {
         return likedMessageIdsOf[msg.sender];
     }
 
+    /// @notice Create a message (message must be no more than 200 characters)
     function createMessage(string memory content) public {
         require(bytes(content).length <= 200);
         Message memory message = Message(
@@ -136,6 +149,6 @@ contract DSNS {
             0
         );
         messages.push(message);
-        messageCount++;
+        messageCount += 1;
     }
 }
